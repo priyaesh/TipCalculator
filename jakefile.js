@@ -2,7 +2,7 @@
     "use strict";
 
     var semver = require("semver");
-    var jshint = require("simplebuilt-jshint");
+    //var jshint = require("simplebuild-jshint");
 
   
     console.log("\n\n Build ok");
@@ -25,17 +25,25 @@
               }
     
     });
+
+    desc("Run a localhost server");
+        task("run", function(){
+            jake.exec("node node_modules/http-server/bin/http-server "+ {interactive:true},complete);
+            console.log("Run http-server");
+        });
+
     desc("Lint javascript code");
         task("lint",function(){
             process.stdout.write("Linting JavaScript code:");
         
             jshint.checkFiles({
-                files:["Jakefile.js","src/**/*.js"],
+                files:["jakefile.js","src/**/*.js"],
                 options: lintOption(),
                 globals:lintGlobal(),
             },
                 complete,fail);
                 },{async:true});
+        
         
             function lintOption(){
                 return {
